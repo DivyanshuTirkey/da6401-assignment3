@@ -1,0 +1,31 @@
+name: sweep_attention_seq2seq
+method: bayes
+metric:
+  name: val_exact_match
+  goal: maximize
+early_terminate:
+  type: hyperband
+  min_iter: 3
+  max_iter: 10
+  s: 2
+parameters:
+  embedding_dim:
+    values: [128, 256, 512]
+  hidden_dim:
+    values: [256, 512]
+  num_encoding_layers:
+    values: [1, 2, 3]
+  num_decoding_layers:
+    values: [1, 2, 3]
+  dropout:
+    values: [0.2, 0.3]
+  cell_type:
+    values: ['gru', 'lstm', 'rnn']
+  teacher_forcing_ratio:
+    values: [0.7, 0.9]
+  learning_rate:
+    distribution: log_uniform
+    min: -7.6
+    max: -5.9
+  batch_size:
+    values: [64, 128]
